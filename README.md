@@ -9,7 +9,7 @@ __License:__ [GPL-2.0+](http://www.gnu.org/licenses/gpl-2.0.html)
 
 ### Requirements
 
-It does requires:
+The plugin requires:
 * [Core Plugin](https://github.com/wpdevelopersclub/WPDC_Core) 
 
 ### Features
