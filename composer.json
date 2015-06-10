@@ -1,0 +1,42 @@
+{
+    "name" 			: "wpdevelopersclub/authlock",
+    "description" 	: "Access security for your posts, pages, resources, media, and more + 3-auth for login",
+    "type"          : "project",
+    "keywords" 		: ["wordpress", "wp", "plugin"],
+    "homepage" 		: "http://wpdevelopersclub.com/wordpress-plugins/auth-lock/",
+    "license" 		: "GPL-2.0+",
+    "authors": [
+        {
+            "name" 	: "Tonya",
+            "email" : "hellofromtonya@gmail.com"
+        }
+    ],
+    "require": {
+        "php" : ">=5.3.0"
+    },
+    "autoload" : {
+        "classmap" : [
+            "class-plugin.php",
+
+            "lib/admin/class-media.php",
+            "lib/admin/class-metabox.php",
+
+            "lib/restrict/class-login.php",
+            "lib/restrict/class-menu.php",
+            "lib/restrict/class-menu-walker.php",
+            "lib/restrict/class-page.php"
+        ],
+        "files": [
+            "lib/support/helpers.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "vendor-dir": "assets/vendor"
+    },
+    "minimum-stability": "dev"
+}
