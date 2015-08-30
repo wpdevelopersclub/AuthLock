@@ -6,11 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'AuthLock\\Admin\\Media' => $baseDir . '/lib/admin/class-media.php',
-    'AuthLock\\Admin\\Metabox' => $baseDir . '/lib/admin/class-metabox.php',
-    'AuthLock\\Plugin' => $baseDir . '/class-plugin.php',
-    'AuthLock\\Restrict\\Login' => $baseDir . '/lib/restrict/class-login.php',
-    'AuthLock\\Restrict\\Menu' => $baseDir . '/lib/restrict/class-menu.php',
-    'AuthLock\\Restrict\\Page' => $baseDir . '/lib/restrict/class-page.php',
-    'AuthLock\\Restrict\\Restrict_Menu_Walker' => $baseDir . '/lib/restrict/class-menu-walker.php',
+    'AuthLock\\Admin\\Media' => $baseDir . '/src/admin/class-media.php',
+    'AuthLock\\Admin\\Metabox' => $baseDir . '/src/admin/class-metabox.php',
+    'AuthLock\\AuthLock' => $baseDir . '/class-authlock.php',
+    'AuthLock\\Restrict\\Login' => $baseDir . '/src/restrict/class-login.php',
+    'AuthLock\\Restrict\\Menu' => $baseDir . '/src/restrict/class-menu.php',
+    'AuthLock\\Restrict\\Page' => $baseDir . '/src/restrict/class-page.php',
+    'AuthLock\\Restrict\\Restrict_Menu_Walker' => $baseDir . '/src/restrict/class-menu-walker.php',
 );

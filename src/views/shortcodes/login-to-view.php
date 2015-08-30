@@ -8,4 +8,7 @@ if ( is_user_logged_in() ) {
 	$content = wp_kses_post( do_shortcode( $content ) );
 
 	echo $atts['wpautop'] ? wpautop( $content ) : $content;
+
+} else {
+	esc_html_e( $atts['alternate_message'] );
 }

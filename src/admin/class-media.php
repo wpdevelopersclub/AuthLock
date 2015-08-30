@@ -20,8 +20,14 @@ class Media {
 	 */
 	protected $restrict_by_user_role = false;
 
+	/***************************
+	 * Instantiate & Initialize
+	 **************************/
+
 	/**
 	 * Handles the methods upon instantiation
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param boolean   $restrict_by_user_role     Set to true to restrict by user role;
 	 *                                              else restricts by user ID
@@ -31,10 +37,17 @@ class Media {
 
 		$this->restrict_by_user_role = $restrict_by_user_role;
 
-		$this->init_hooks();
+		$this->init_events();
 	}
 
-	protected function init_hooks() {
+	/**
+	 * Initialize Events
+	 *
+	 * @since 1.0.1
+	 *
+	 * @return null
+	 */
+	protected function init_events() {
 		add_action( 'admin_init', function() {
 
 			if ( ! current_user_can( 'manage_options' ) ) {
@@ -42,6 +55,10 @@ class Media {
 			}
 		} );
 	}
+
+	/***************************
+	 * Callbacks
+	 **************************/
 
 	/**
 	 * Build the WHERE SQL for the Media Library based on user role
@@ -52,7 +69,6 @@ class Media {
 	 * @return string
 	 */
 	public function build_media_library_where_sql( $where_sql ) {
-
 		if ( ! isset( $_POST['action'] ) || 'query-attachments' != $_POST['action'] ) {
 			return $where_sql;
 		}
@@ -76,6 +92,10 @@ class Media {
 			implode( ',', $user_ids )
 		);
 	}
+
+	/***************************
+	 * Helpers
+	 **************************/
 
 	/**
 	 * Get all of the user IDs based on the current user's role

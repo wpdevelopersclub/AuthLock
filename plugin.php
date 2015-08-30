@@ -3,11 +3,11 @@
 /**
  * AuthLock
  *
- * @package     AuthLock
- * @author      WPDevelopersClub and hellofromTonya
- * @license     GPL-2.0+
- * @link        http://wpdevelopersclub.com/wordpress-plugins/authlock/
- * @copyright   2015 WP Developers Club
+ * @package         AuthLock
+ * @author          WPDevelopersClub and hellofromTonya
+ * @license         GPL-2.0+
+ * @link            http://wpdevelopersclub.com/wordpress-plugins/authlock/
+ * @copyright       2015 WP Developers Club
  *
  * @wordpress-plugin
  * Plugin Name:     AuthLock
@@ -37,32 +37,40 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-//* Oh no you don't. Exit if accessed directly
+use WPDevsClub_Core\I_Core;
+use WPDevsClub_Core\Config\Factory;
+
+// Oh no you don't. Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Cheating&#8217; uh?' );
 }
 
 require_once( __DIR__ . '/assets/vendor/autoload.php' );
 
-define( 'AUTHLOCK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'AUTHLOCK_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+if ( ! defined( 'AUTHLOCK_PLUGIN_DIR' ) ) {
+	define( 'AUTHLOCK_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+}
 
-//* Time to launch Core
-if ( version_compare( $GLOBALS['wp_version'], Plugin::MIN_WP_VERSION, '>' ) ) {
+if ( ! defined( 'AUTHLOCK_PLUGIN_URL' ) ) {
+	$plugin_url = plugin_dir_url( __FILE__ );
+	if ( is_ssl() ) {
+		$plugin_url = str_replace( 'http://', 'https://', $plugin_url );
+	}
+	define( 'AUTHLOCK_PLUGIN_URL', $plugin_url );
+}
 
-	add_action( 'wpdevsclub_core_loaded', __NAMESPACE__ . '\\launch' );
-	/**
-	 * Launch the plugin, if the user is an admin
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return null
-	 */
-	function launch() {
-
+add_action( 'wpdc_is_loaded', __NAMESPACE__ . '\\launch' );
+/**
+ * Launch the plugin, if the user is an admin
+ *
+ * @since 1.1.0
+ *
+ * @param I_Core $core
+ * @return null
+ */
+function launch( I_Core $core ) {
+	if ( version_compare( $GLOBALS['wp_version'], AuthLock::MIN_WP_VERSION, '>' ) ) {
 		/** @noinspection PhpIncludeInspection */
-		new Plugin(
-			include( AUTHLOCK_PLUGIN_DIR . 'config/plugin.php' )
-		);
+		new AuthLock( Factory::create( AUTHLOCK_PLUGIN_DIR . 'config/authlock.php' ), $core );
 	}
 }

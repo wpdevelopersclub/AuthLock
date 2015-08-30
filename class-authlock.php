@@ -19,13 +19,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Cheating&#8217; uh?' );
 }
 
-use AuthLock\Admin\Media;
-use AuthLock\Admin\Metabox;
-use AuthLock\Restrict\Login;
-use AuthLock\Restrict\Menu;
-use AuthLock\Restrict\Page;
+use WPDevsClub_Core\Config\I_Config;
+use WPDevsClub_Core\I_Core;
 
-class Plugin {
+class AuthLock {
 
 	/**
 	 * The plugin's version
@@ -44,9 +41,16 @@ class Plugin {
 	/**
 	 * Configuration array
 	 *
-	 * @var array
+	 * @var I_Config
 	 */
-	protected $config = array();
+	protected $config;
+
+	/**
+	 * Instance of Core
+	 *
+	 * @var I_Core
+	 */
+	protected $core;
 
 	/*************************
 	 * Getters
@@ -69,23 +73,39 @@ class Plugin {
 	 *
 	 * @since 1.0.1
 	 *
-	 * @param array     $config     Configuration array
+	 * @param I_Config $config Runtime configuration parameters
+	 * @param I_Core $core Instance of Core
 	 * @return self
 	 */
-	public function __construct( array $config ) {
-		$this->config = $config;
+	public function __construct( I_Config $config, I_Core $core ) {
+		$this->config   = $config;
+		$this->core     = $core;
 
-		$this->init_hooks();
+		$this->init_parameters();
+		$this->init_events();
 	}
 
 	/**
-	 * Initialize hooks
+	 * Initialize the initial parameters by loading each into the Container.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return null
 	 */
-	protected function init_hooks() {
+	protected function init_parameters() {
+		array_walk( $this->config->initial_parameters, function( $value, $unique_id ) {
+			$this->core[ $unique_id ] = $value;
+		} );
+	}
+
+	/**
+	 * Initialize events
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return null
+	 */
+	protected function init_events() {
 		add_action( 'init',     array( $this, 'init_object_factory' ), 1 );
 	}
 
@@ -97,66 +117,17 @@ class Plugin {
 	 * @return null
 	 */
 	function init_object_factory() {
+		$service_providers = array(
+			is_admin() ? 'be_service_providers' : 'fe_service_providers',
+			'both_service_providers'
+		);
 
-		if ( is_admin() ) {
-			$this->init_be();
-		} else {
-			$this->init_fe();
-		}
-
-		new Menu();
-	}
-
-	/**
-	 * Init the back-end objects
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return null
-	 */
-	protected function init_be() {
-		new Media;
-
-		$metaboxes = wpdevsclub_load_config( 'metaboxes.php', AUTHLOCK_PLUGIN_DIR . 'config/' );
-		foreach ( $metaboxes as $mb_config ) {
-			new Metabox( $mb_config );
-		}
-	}
-
-	/**
-	 * Init the front-end objects
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return null
-	 */
-	protected function init_fe() {
-		ob_start();
-
-		new Login;
-		new Page;
-
-		$this->init_shortcodes( wpdevsclub_load_config( 'shortcodes.php', AUTHLOCK_PLUGIN_DIR . 'config/' ) );
-	}
-
-	/**
-	 * Initialize Shortcodes
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array     $shortcodes     Configuration array
-	 * @return null
-	 */
-	protected function init_shortcodes( array $shortcodes ) {
-
-		foreach ( $shortcodes as $key => $config ) {
-
-			if ( class_exists( $config['classname'] ) ) {
-				$classname = $config['classname'];
-
-				new $classname( $config );
+		array_walk( $service_providers, function( $service_provider ) {
+			if ( 'fe_service_providers' == $service_provider ) {
+				ob_start();
 			}
-		}
+			$this->core->register_service_providers( $this->config->$service_provider );
+		} );
 	}
 
 	/**

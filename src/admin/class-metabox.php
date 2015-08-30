@@ -11,41 +11,75 @@
  * @copyright   2015 WP Developers Club
  */
 
+use WPDevsClub_Core\Config\I_Config;
+
 class Metabox {
 
 	/**
 	 * Configuration array
 	 *
-	 * @var array
+	 * @var I_Config
 	 */
-	protected $config = array();
+	protected $config;
+
+	/***************************
+	 * Instantiate & Initialize
+	 **************************/
 
 	/**
 	 * Handles the methods upon instantiation
 	 *
-	 * @param array $config     Configuration array
+	 * @since 1.1.0
+	 *
+	 * @param I_Config $config Configuration parameters
 	 *
 	 * @return  self
 	 */
-	public function __construct( array $config ) {
-
+	public function __construct( I_Config $config ) {
 		$this->config = $config;
 
 		$this->init_hooks();
 	}
 
+	/**
+	 * Initialize events
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return null
+	 */
 	protected function init_hooks() {
-		add_filter( 'wpdevsclub_core_metabox_page_options_meta_defaults',   array( $this, 'meta_defaults' ) );
+		add_filter( 'wpdevsclub_metabox_page_options_meta_defaults',   array( $this, 'meta_defaults' ) );
 
-		add_filter( 'wpdevsclub_core_metabox_page_options_sanitize',        array( $this, 'sanitize' ) );
+		add_filter( 'wpdevsclub_metabox_page_options_sanitize',        array( $this, 'sanitize' ) );
 
-		add_action( 'wpdevsclub_core_metabox_render_view',                  array( $this, 'render_metabox' ), 10, 4 );
+		add_action( 'wpdevsclub_metabox_render_view',                  array( $this, 'render_metabox' ), 10, 4 );
 	}
 
+	/***************************
+	 * Callbacks
+	 **************************/
+
+	/**
+	 * Add Meta to page options via filter
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $meta_defaults
+	 * @return array
+	 */
 	public function meta_defaults( $meta_defaults ) {
 		return $this->add_to_filter( 'meta_defaults', $meta_defaults );
 	}
 
+	/**
+	 * Add Meta to page options sanitizer via filter
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $sanitize
+	 * @return array
+	 */
 	public function sanitize( $sanitize ) {
 		return $this->add_to_filter( 'sanitize', $sanitize );
 	}
@@ -62,13 +96,8 @@ class Metabox {
 	 * @return null
 	 */
 	public function render_metabox( $meta_box, $meta, $post, $args ) {
-
-		if ( $meta_box != $this->config['meta_name'] ) {
-			return;
-		}
-
-		if ( is_readable( $this->config['metabox_view'] ) ) {
-			include( $this->config['metabox_view'] );
+		if ( $meta_box == $this->config->meta_name && is_readable( $this->config->metabox_view ) ) {
+			include( $this->config->metabox_view );
 		}
 	}
 
@@ -82,7 +111,7 @@ class Metabox {
 	 * @return array
 	 */
 	protected function add_to_filter( $type, $filter_array ) {
-		foreach ( $this->config[ $type ] as $key => $value ) {
+		foreach ( $this->config->$type as $key => $value ) {
 			$filter_array[ $key ] = $value;
 		}
 

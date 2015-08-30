@@ -8,7 +8,7 @@
     "authors": [
         {
             "name" 	: "Tonya",
-            "email" : "hellofromtonya@gmail.com"
+            "email" : "hellofromtonya@wpdevelopersclub.com"
         }
     ],
     "require": {
@@ -16,18 +16,18 @@
     },
     "autoload" : {
         "classmap" : [
-            "class-plugin.php",
+            "class-authlock.php",
 
-            "lib/admin/class-media.php",
-            "lib/admin/class-metabox.php",
+            "src/admin/class-media.php",
+            "src/admin/class-metabox.php",
 
-            "lib/restrict/class-login.php",
-            "lib/restrict/class-menu.php",
-            "lib/restrict/class-menu-walker.php",
-            "lib/restrict/class-page.php"
+            "src/restrict/class-login.php",
+            "src/restrict/class-menu.php",
+            "src/restrict/class-menu-walker.php",
+            "src/restrict/class-page.php"
         ],
         "files": [
-            "lib/support/helpers.php"
+            "src/support/helpers.php"
         ]
     },
     "extra": {

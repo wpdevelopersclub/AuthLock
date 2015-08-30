@@ -13,6 +13,10 @@
 
 class Login {
 
+	/***************************
+	 * Instantiate & Initialize
+	 **************************/
+
 	/**
 	 * Handles the methods upon instantiation
 	 *
@@ -30,12 +34,14 @@ class Login {
 	 * @return null
 	 */
 	protected function init_hooks() {
-
 		add_filter( 'login_errors',     array( $this, 'login_errors' ) );
 
-		// Redirect to portal page after logging in
 		add_filter( 'login_redirect',   array( $this, 'redirect_to_portal_after_login' ), 10, 3 );
 	}
+
+	/***************************
+	 * Callbacks
+	 **************************/
 
 	/**
 	 * Prevents brute-force hacking into our site by eliminating the
@@ -47,8 +53,7 @@ class Login {
 	 * @return string Returns the new error message
 	 */
 	public function login_errors( $error ) {
-
-		$new_error_message = __( 'The credentials provided are incorrect.', 'lunarwp' );
+		$new_error_message = __( 'The credentials provided are incorrect.', 'authlock' );
 		$error             = str_replace( 'Invalid username.', $new_error_message, $error );
 		$error             = preg_replace( '{The password you entered for the username <strong>.*</strong> is incorrect\.}', $new_error_message, $error );
 

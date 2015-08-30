@@ -13,6 +13,10 @@
 
 class Menu {
 
+	/***************************
+	 * Instantiate & Initialize
+	 **************************/
+
 	/**
 	 * Handles the methods upon instantiation
 	 *
@@ -37,6 +41,10 @@ class Menu {
 		add_filter( 'walker_nav_menu_start_el', array( $this, 'check_access_level_for_menu_item' ), 10, 4 );
 
 	}
+
+	/***************************
+	 * Callbacks
+	 **************************/
 
 	/**
 	 * Add the new custom field "Access Level" to the $menu_item (will be used in the Walker)
@@ -122,5 +130,4 @@ class Menu {
 	public function nav_walker( $walker, $menu_id ) {
 		return '\AuthLock\Restrict\Restrict_Menu_Walker';
 	}
-
 }
