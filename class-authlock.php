@@ -19,10 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit( 'Cheating&#8217; uh?' );
 }
 
-use WPDevsClub_Core\Config\I_Config;
-use WPDevsClub_Core\I_Core;
+use WPDevsClub_Core\Addons\Addon;
 
-class AuthLock {
+class AuthLock extends Addon {
 
 	/**
 	 * The plugin's version
@@ -38,65 +37,10 @@ class AuthLock {
 	 */
 	const MIN_WP_VERSION = '3.5';
 
-	/**
-	 * Configuration array
-	 *
-	 * @var I_Config
-	 */
-	protected $config;
-
-	/**
-	 * Instance of Core
-	 *
-	 * @var I_Core
-	 */
-	protected $core;
-
-	/*************************
-	 * Getters
-	 ************************/
-
-	public function version() {
-		return self::VERSION;
-	}
-
-	public function min_wp_version() {
-		return self::MIN_WP_VERSION;
-	}
 
 	/*************************
 	 * Instantiate & Init
 	 ************************/
-
-	/**
-	 * Instantiate the plugin
-	 *
-	 * @since 1.0.1
-	 *
-	 * @param I_Config $config Runtime configuration parameters
-	 * @param I_Core $core Instance of Core
-	 * @return self
-	 */
-	public function __construct( I_Config $config, I_Core $core ) {
-		$this->config   = $config;
-		$this->core     = $core;
-
-		$this->init_parameters();
-		$this->init_events();
-	}
-
-	/**
-	 * Initialize the initial parameters by loading each into the Container.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return null
-	 */
-	protected function init_parameters() {
-		array_walk( $this->config->initial_parameters, function( $value, $unique_id ) {
-			$this->core[ $unique_id ] = $value;
-		} );
-	}
 
 	/**
 	 * Initialize events
