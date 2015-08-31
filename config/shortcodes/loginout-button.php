@@ -2,7 +2,7 @@
 
 return array(
 	'shortcode'                 => 'loginout_button',
-	'view'                      => AUTHLOCK_PLUGIN_DIR . 'lib/views/shortcodes/loginlogout.php',
+	'view'                      => AUTHLOCK_PLUGIN_DIR . 'src/views/shortcodes/loginlogout.php',
 	'defaults'                  => array(
 		'class'                 => '',
 		'open_new_tab'          => 0,

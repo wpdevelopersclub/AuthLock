@@ -4,7 +4,7 @@
  * Restrict Menu Walker
  *
  * @package     AuthLock\Restrict
- * @since       1.0.0
+ * @since       1.1.0
  * @author      WPDevelopersClub and hellofromTonya
  * @license     GPL-2.0+
  * @link        http://wpdevelopersclub.com/wordpress-plugins/authlock/

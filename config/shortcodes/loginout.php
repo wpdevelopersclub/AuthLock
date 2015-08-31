@@ -2,7 +2,7 @@
 
 return array(
 	'shortcode'                 => 'wpdevsclub_loginout',
-	'view'                      => AUTHLOCK_PLUGIN_DIR . 'src/views/shortcodes/clearfix.php',
+	'view'                      => AUTHLOCK_PLUGIN_DIR . 'src/views/shortcodes/loginout.php',
 	'defaults'                  => array(
 		'class'                 => '',
 	),

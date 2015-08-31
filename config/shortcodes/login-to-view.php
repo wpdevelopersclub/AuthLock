@@ -2,7 +2,7 @@
 
 return array(
 	'shortcode'                 => 'login_to_view',
-	'view'                      => AUTHLOCK_PLUGIN_DIR . 'lib/views/shortcodes/login-to-view.php',
+	'view'                      => AUTHLOCK_PLUGIN_DIR . 'src/views/shortcodes/login-to-view.php',
 	'defaults'                  => array(
 		'class'                 => '',
 		'wpautop'               => 1,
