@@ -4,11 +4,10 @@
  * Core Defaults Configuration file.
  *
  * @package     AuthLock
- * @since       1.0.0
+ * @since       1.1.1
  * @author      WPDevelopersClub, hellofromTonya, Alain Schlesser, Gary Jones
  * @link        https://wpdevelopersclub.com/
  * @license     GNU General Public License 2.0+
- * @copyright   2015 WP Developers Club
  */
 
 use WPDevsClub_Core\Config\Arr_Config;
@@ -29,12 +28,11 @@ return array(
 	 *    $unique_id => $value
 	 ********************************************************/
 
-	'initial_parameters'                => array(
-		'authlock_plugin_dir'           => AUTHLOCK_PLUGIN_DIR,
-		'authlock_plugin_url'           => AUTHLOCK_PLUGIN_URL,
-		'authlock_config_dir'           => AUTHLOCK_PLUGIN_DIR . 'config/',
+	'initial_parameters'     => array(
+		'authlock_plugin_dir' => AUTHLOCK_PLUGIN_DIR,
+		'authlock_plugin_url' => AUTHLOCK_PLUGIN_URL,
+		'authlock_config_dir' => AUTHLOCK_PLUGIN_DIR . 'config/',
 	),
-
 	/*********************************************************
 	 * Back-End Service Providers -
 	 * These service providers are loaded when 'admin_init' fires.
@@ -48,21 +46,24 @@ return array(
 	 *      'concrete' => Closure,
 	 ********************************************************/
 
-	'be_service_providers'      => array(
-		'authlock.media'  => array(
-			'autoload'          => true,
-			'concrete'          => function( $container ) {
+	'be_service_providers'   => array(
+		'authlock.media'                => array(
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Media;
 			},
 		),
 		'authlock.metabox.page_options' => array(
-			'autoload'          => true,
-			'concrete'          => function( $container ) {
-				return new Metabox( new Arr_Config( $container['authlock_config_dir'] . 'metaboxes/page-options.php' ) );
+			'autoload' => true,
+			'concrete' => function ( $container ) {
+				return new Metabox(
+					new Arr_Config(
+						$container['authlock_config_dir'] . 'metaboxes/page-options.php'
+					)
+				);
 			},
 		),
 	),
-
 	/*********************************************************
 	 * Front-End Service Providers -
 	 * These service providers are loaded when 'genesis_init'
@@ -77,45 +78,44 @@ return array(
 	 *      'concrete' => Closure,
 	 ********************************************************/
 
-	'fe_service_providers'  => array(
-		'authlock.login'    => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+	'fe_service_providers'   => array(
+		'authlock.login'                => array(
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Login;
 			},
 		),
-		'authlock.page'     => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+		'authlock.page'                 => array(
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Page;
 			},
 		),
 		'shortcode.wpdevsclub_loginout' => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Shortcode( new Arr_Config( $container['authlock_config_dir'] . 'shortcodes/loginout.php' ) );
 			},
 		),
-		'shortcode.security_button' => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+		'shortcode.security_button'     => array(
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Shortcode( new Arr_Config( $container['authlock_config_dir'] . 'shortcodes/security-button.php' ) );
 			},
 		),
-		'shortcode.loginout_button' => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+		'shortcode.loginout_button'     => array(
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Shortcode( new Arr_Config( $container['authlock_config_dir'] . 'shortcodes/loginout-button.php' ) );
 			},
 		),
-		'shortcode.login_to_view' => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+		'shortcode.login_to_view'       => array(
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Shortcode( new Arr_Config( $container['authlock_config_dir'] . 'shortcodes/login-to-view.php' ) );
 			},
 		),
 	),
-
 	/*********************************************************
 	 * Front-End Service Providers -
 	 * These service providers are loaded when 'genesis_init' fires.
@@ -129,10 +129,10 @@ return array(
 	 *      'concrete' => Closure,
 	 ********************************************************/
 
-	'both_service_providers'    => array(
+	'both_service_providers' => array(
 		'authlock.menu' => array(
-			'autoload'      => true,
-			'concrete'      => function( $container ) {
+			'autoload' => true,
+			'concrete' => function ( $container ) {
 				return new Menu;
 			},
 		),
