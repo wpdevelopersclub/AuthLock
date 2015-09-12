@@ -7,11 +7,10 @@
  * admin menu, etc.
  *
  * @package     AuthLock
- * @since       1.1.0
+ * @since       1.1.1
  * @author      WPDevelopersClub and hellofromTonya
  * @license     GPL-2.0+
- * @link        http://wpdevelopersclub.com/wordpress-plugins/authlock/
- * @copyright   2015 WP Developers Club
+ * @link        https://wpdevelopersclub.com/wordpress-plugins/authlock/
  */
 
 // Oh no you don't. Exit if accessed directly

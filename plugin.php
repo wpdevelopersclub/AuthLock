@@ -6,16 +6,16 @@
  * @package         AuthLock
  * @author          WPDevelopersClub and hellofromTonya
  * @license         GPL-2.0+
- * @link            http://wpdevelopersclub.com/wordpress-plugins/authlock/
+ * @link            https://wpdevelopersclub.com
  * @copyright       2015 WP Developers Club
  *
  * @wordpress-plugin
  * Plugin Name:     AuthLock
- * Plugin URI:      http://wpdevelopersclub.com/wordpress-plugins/authlock/
+ * Plugin URI:      https://wpdevelopersclub.com
  * Description:     Access security for your posts, pages, resources, media, and more + 3-auth for login
- * Version:         1.0.1
+ * Version:         1.1.1
  * Author:          WP Developers Club and Tonya
- * Author URI:      http://wpdevelopersclub.com
+ * Author URI:      https://wpdevelopersclub.com
  * Text Domain:     authlock
  * Requires WP:     3.3
  * Requires PHP:    5.3
@@ -59,7 +59,7 @@ if ( ! defined( 'AUTHLOCK_PLUGIN_URL' ) ) {
 	define( 'AUTHLOCK_PLUGIN_URL', $plugin_url );
 }
 
-add_action( 'wpdc_is_loaded', __NAMESPACE__ . '\\launch' );
+add_action( 'wpdc_is_loaded', __NAMESPACE__ . '\\launch', 9 );
 /**
  * Launch the plugin, if the user is an admin
  *
@@ -70,7 +70,6 @@ add_action( 'wpdc_is_loaded', __NAMESPACE__ . '\\launch' );
  */
 function launch( I_Core $core ) {
 	if ( version_compare( $GLOBALS['wp_version'], AuthLock::MIN_WP_VERSION, '>' ) ) {
-		/** @noinspection PhpIncludeInspection */
 		new AuthLock( Factory::create( AUTHLOCK_PLUGIN_DIR . 'config/authlock.php' ), $core );
 	}
 }
